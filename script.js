@@ -332,7 +332,7 @@ function conferir() {
     mensagemEl.className = "mensagem vitoria";
   } else {
     const faltam = PALAVRAS.length - acertos;
-    mensagemEl.textContent = `Faltam ${faltam} ${faltam === 1 ? "palavra" : "palavras"}. As erradas estão em vermelho.`;
+    mensagemEl.textContent = `Faltam ${faltam} ${faltam === 1 ? "palavra" : "palavras"}: as erradas estão em vermelho.`;
     mensagemEl.className = "mensagem aviso";
   }
 }
@@ -372,7 +372,7 @@ function reiniciar() {
   mensagemEl.className = "mensagem";
   palavraAtiva = null;
   atualizarDestaque();
-  pistaAtivaEl.textContent = "Escolha uma casa para começar";
+  pistaAtivaEl.textContent = "Clique numa casa ou numa pista e digite. Espaço troca a direção.";
 }
 
 // ---------- Início ----------

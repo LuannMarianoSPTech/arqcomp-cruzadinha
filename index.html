@@ -14,21 +14,22 @@
   <div class="crt" aria-hidden="true"></div>
 
   <header class="topo">
-    <p class="subtitulo">ARQUITETURA COMPUTACIONAL</p>
-    <h1 class="titulo">CRUZADINHA</h1>
+    <div class="marca">
+      <p class="subtitulo">ARQUITETURA COMPUTACIONAL</p>
+      <h1 class="titulo">CRUZADINHA</h1>
+    </div>
     <p class="instrucao">Clique numa casa ou numa pista e digite. Espaço troca a direção.</p>
+    <div class="placar">
+      <span class="placar-rotulo">ACERTOS</span>
+      <span id="contador" class="placar-valor">0 de 16 palavras</span>
+    </div>
   </header>
 
   <main class="jogo">
     <section class="area-tabuleiro">
-      <div class="placar">
-        <span class="placar-rotulo">ACERTOS</span>
-        <span id="contador" class="placar-valor">0 de 16 palavras</span>
-      </div>
-
       <div id="tabuleiro" class="tabuleiro" role="grid" aria-label="Tabuleiro da cruzadinha"></div>
 
-      <div id="pista-ativa" class="pista-ativa" aria-live="polite">Escolha uma casa para começar</div>
+      <div id="pista-ativa" class="pista-ativa" aria-live="polite">Clique numa casa ou numa pista e digite. Espaço troca a direção.</div>
 
       <div class="botoes">
         <button id="btn-conferir" class="botao botao-conferir" type="button">CONFERIR</button>

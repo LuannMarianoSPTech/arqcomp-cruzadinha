@@ -56,12 +56,17 @@ body {
 
 /* ---------- Cabeçalho ---------- */
 .topo {
-  text-align: center;
-  padding: 32px 16px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 14px 24px 4px;
 }
 
 .subtitulo {
-  margin: 0 0 14px;
+  margin: 0 0 8px;
   font-family: var(--fonte-pixel);
   font-size: 11px;
   letter-spacing: 2px;
@@ -71,36 +76,36 @@ body {
 .titulo {
   margin: 0;
   font-family: var(--fonte-pixel);
-  font-size: clamp(26px, 6vw, 52px);
+  font-size: clamp(22px, 3.2vw, 36px);
   color: var(--amarelo);
   text-shadow:
-    4px 4px 0 var(--rosa),
-    8px 8px 0 var(--borda);
+    3px 3px 0 var(--rosa),
+    6px 6px 0 var(--borda);
   letter-spacing: 2px;
 }
 
 .instrucao {
-  margin: 18px 0 0;
+  margin: 0;
   color: var(--texto-fraco);
+  text-align: center;
 }
 
 /* ---------- Layout ---------- */
 .jogo {
   display: grid;
-  grid-template-columns: auto minmax(300px, 460px);
-  gap: 28px;
-  justify-content: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px 24px 16px;
 }
 
 .area-tabuleiro {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 /* moldura pixelada reutilizada */
@@ -223,15 +228,14 @@ body {
 /* ---------- Pista ativa ---------- */
 .pista-ativa {
   width: 100%;
-  max-width: calc(16 * 40px + 28px);
-  min-height: 64px;
-  padding: 12px 16px;
+  min-height: 58px;
+  padding: 8px 14px;
   color: var(--texto);
 }
 
 .pista-ativa strong {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font-family: var(--fonte-pixel);
   font-size: 10px;
   font-weight: normal;
@@ -248,8 +252,8 @@ body {
 
 .botao {
   font-family: var(--fonte-pixel);
-  font-size: 13px;
-  padding: 14px 20px;
+  font-size: 12px;
+  padding: 12px 18px;
   color: var(--borda);
   border: var(--px) solid var(--borda);
   cursor: pointer;
@@ -280,7 +284,7 @@ body {
 
 /* ---------- Mensagem ---------- */
 .mensagem {
-  min-height: 28px;
+  min-height: 26px;
   margin: 0;
   text-align: center;
   font-size: 24px;
@@ -301,24 +305,23 @@ body {
 
 /* ---------- Pistas ---------- */
 .area-pistas {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  position: sticky;
-  top: 16px;
-  max-height: calc(100vh - 32px);
-  overflow-y: auto;
-  padding: 0 10px 10px 0;
+  display: grid;
+  /* verticais tem 9 pistas e horizontais 7: a coluna da direita é um pouco maior */
+  grid-template-columns: 7fr 9fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.lista-pistas {
   scrollbar-width: thin;
   scrollbar-color: var(--rosa) var(--fundo-2);
 }
-
-.area-pistas::-webkit-scrollbar { width: 12px; }
-.area-pistas::-webkit-scrollbar-track { background: var(--fundo-2); }
-.area-pistas::-webkit-scrollbar-thumb { background: var(--rosa); border: 3px solid var(--fundo-2); }
+.lista-pistas::-webkit-scrollbar { width: 10px; }
+.lista-pistas::-webkit-scrollbar-track { background: var(--fundo-2); }
+.lista-pistas::-webkit-scrollbar-thumb { background: var(--rosa); border: 2px solid var(--fundo-2); }
 
 .caixa-pistas {
-  padding: 16px 14px 10px;
+  padding: 14px 12px 8px;
 }
 
 .caixa-pistas h2 {
@@ -338,11 +341,13 @@ body {
 
 .pista {
   display: grid;
-  grid-template-columns: 34px 1fr 26px;
-  gap: 8px;
+  grid-template-columns: 28px 1fr 18px;
+  gap: 4px;
   align-items: start;
-  padding: 6px 6px;
-  margin-bottom: 4px;
+  padding: 4px 6px;
+  margin-bottom: 2px;
+  font-size: 20px;
+  line-height: 1.05;
   cursor: pointer;
   border: 2px solid transparent;
 }
@@ -385,20 +390,79 @@ body {
   font-size: 18px;
 }
 
-/* ---------- Telas menores ---------- */
-@media (max-width: 1060px) {
-  .jogo { grid-template-columns: 1fr; }
-  .area-pistas {
-    position: static;
-    max-height: none;
-    overflow: visible;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: 900px;
-    margin: 0 auto;
-    width: 100%;
+/* ---------- Computador: tudo cabe na tela, sem rolagem ---------- */
+@media (min-width: 900px) and (min-height: 560px) {
+  body {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
+
+  .jogo {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  /* a coluna do tabuleiro tem a largura do próprio tabuleiro */
+  .area-tabuleiro { width: min-content; }
+  .mensagem { font-size: 20px; }
+  .pista-ativa { font-size: 20px; }
+
+  /* altura da tela menos cabeçalho, pista ativa, botões e mensagem */
+  .tabuleiro {
+    --casa-tam: min(
+      44px,
+      calc((100dvh - 350px) / var(--linhas)),
+      calc((100vw * 0.42 - 50px) / var(--colunas))
+    );
+  }
+
+  /* o texto das pistas acompanha a altura da tela */
+  .pista { font-size: clamp(15px, 2.3vh, 21px); }
+  .caixa-pistas h2 { margin-bottom: 8px; }
+
+  .area-pistas {
+    min-height: 0;
+    height: 100%;
+    align-items: stretch;
+  }
+
+  .caixa-pistas {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* se a tela for muito baixa, só a lista de pistas rola por dentro */
+  .lista-pistas {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .rodape { display: none; }
+}
+
+/* em telas de computador mais estreitas a dica fica só na caixa da pista */
+@media (max-width: 1199px) {
+  .instrucao { display: none; }
+}
+
+/* ---------- Tablet e celular ---------- */
+@media (max-width: 899px), (max-height: 559px) {
+  .topo {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding-top: 24px;
+  }
+  .jogo { grid-template-columns: 1fr; }
+  .area-pistas { max-width: 900px; margin: 0 auto; width: 100%; }
 }
 
 @media (max-width: 700px) {
