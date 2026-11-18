@@ -391,53 +391,89 @@ body {
 }
 
 /* ---------- Computador: tudo cabe na tela, sem rolagem ---------- */
-@media (min-width: 900px) and (min-height: 560px) {
+@media (min-width: 760px) and (min-height: 420px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
   body {
     height: 100vh;
     height: 100dvh;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-size: 18px;
   }
+
+  /* cabeçalho compacto */
+  .topo { padding: 8px 20px 0; gap: 16px; }
+  .subtitulo { font-size: 8px; margin-bottom: 6px; }
+  .titulo {
+    font-size: clamp(18px, 2.2vw, 26px);
+    text-shadow: 2px 2px 0 var(--rosa), 4px 4px 0 var(--borda);
+  }
+  .instrucao { font-size: 18px; }
+  .placar { padding: 6px 12px; }
+  .placar-rotulo { font-size: 8px; }
+  .placar-valor { font-size: 10px; }
 
   .jogo {
     flex: 1;
     min-height: 0;
     width: 100%;
+    gap: 16px;
+    padding: 8px 20px 10px;
     align-items: stretch;
   }
 
   /* a coluna do tabuleiro tem a largura do próprio tabuleiro */
-  .area-tabuleiro { width: min-content; }
-  .mensagem { font-size: 20px; }
-  .pista-ativa { font-size: 20px; }
+  .area-tabuleiro { width: min-content; gap: 8px; }
+  .tabuleiro { padding: 6px; }
 
   /* altura da tela menos cabeçalho, pista ativa, botões e mensagem */
   .tabuleiro {
     --casa-tam: min(
-      44px,
-      calc((100dvh - 350px) / var(--linhas)),
-      calc((100vw * 0.42 - 50px) / var(--colunas))
+      40px,
+      calc((100dvh - 270px) / var(--linhas)),
+      calc((100vw * 0.42 - 40px) / var(--colunas))
     );
   }
 
-  /* o texto das pistas acompanha a altura da tela */
-  .pista { font-size: clamp(15px, 2.3vh, 21px); }
-  .caixa-pistas h2 { margin-bottom: 8px; }
+  .pista-ativa { font-size: 17px; min-height: 48px; padding: 6px 10px; }
+  .pista-ativa strong { font-size: 8px; margin-bottom: 3px; }
+  .botoes { gap: 14px; }
+  .botao { font-size: 10px; padding: 9px 14px; }
+  .mensagem { font-size: 17px; min-height: 20px; }
+  .mensagem.vitoria { font-size: 24px; }
 
+  /* o texto das pistas acompanha a altura da tela */
   .area-pistas {
     min-height: 0;
     height: 100%;
-    align-items: stretch;
+    gap: 12px;
+    align-items: start;
   }
 
   .caixa-pistas {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    max-height: 100%;
+    padding: 10px 8px 6px;
   }
 
-  /* se a tela for muito baixa, só a lista de pistas rola por dentro */
+  .caixa-pistas h2 { font-size: 11px; margin-bottom: 6px; }
+
+  .pista {
+    font-size: clamp(14px, 2.1vh, 19px);
+    grid-template-columns: 24px 1fr 16px;
+    padding: 3px 4px;
+  }
+  .pista-num { font-size: 9px; padding-top: 2px; }
+  .pista.certa .pista-status::before,
+  .pista.errada .pista-status::before { font-size: 20px; }
+
+  /* se ainda faltar espaço, só a lista de pistas rola por dentro */
   .lista-pistas {
     flex: 1;
     min-height: 0;
@@ -454,7 +490,7 @@ body {
 }
 
 /* ---------- Tablet e celular ---------- */
-@media (max-width: 899px), (max-height: 559px) {
+@media (max-width: 759px), (max-height: 419px) {
   .topo {
     flex-direction: column;
     gap: 12px;
