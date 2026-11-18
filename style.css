@@ -206,6 +206,11 @@ body {
 
 .casa.certa { background: var(--verde); }
 .casa.errada { background: var(--vermelho); }
+/* casa vazia de palavra errada: só a moldura vermelha */
+.casa.errada.sem-letra {
+  background: var(--casa);
+  box-shadow: inset 0 0 0 3px var(--vermelho);
+}
 .casa.errada input { color: var(--texto); }
 .casa.certa.foco,
 .casa.errada.foco { background: var(--amarelo); }

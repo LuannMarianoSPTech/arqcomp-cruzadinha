@@ -322,6 +322,7 @@ function conferir() {
   casas.flat().filter(Boolean).forEach((casa) => {
     const certa = casa.palavras.some((p) => p.certa);
     casa.elemento.classList.add(certa ? "certa" : "errada");
+    if (!certa && !casa.input.value) casa.elemento.classList.add("sem-letra");
   });
 
   atualizarContador(acertos);
@@ -350,7 +351,7 @@ function limparMarcacoes(casa) {
   // as casas dessas palavras só continuam verdes se outra palavra certa passa por elas
   casa.palavras.forEach((p) => {
     celulasDaPalavra(p).forEach((c) => {
-      if (!c.palavras.some((outra) => outra.certa)) c.elemento.classList.remove("certa", "errada");
+      if (!c.palavras.some((outra) => outra.certa)) c.elemento.classList.remove("certa", "errada", "sem-letra");
     });
   });
   mensagemEl.textContent = "";
@@ -358,7 +359,7 @@ function limparMarcacoes(casa) {
 }
 
 function limparTodasMarcacoes() {
-  document.querySelectorAll(".certa, .errada").forEach((el) => el.classList.remove("certa", "errada"));
+  document.querySelectorAll(".certa, .errada").forEach((el) => el.classList.remove("certa", "errada", "sem-letra"));
   PALAVRAS.forEach((p) => (p.certa = false));
 }
 
