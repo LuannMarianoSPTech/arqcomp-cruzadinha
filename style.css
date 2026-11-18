@@ -1,0 +1,391 @@
+/* ==========================================================
+   Cruzadinha de Arquitetura Computacional: visual retrô pixel
+   ========================================================== */
+
+:root {
+  --fundo: #140c2b;
+  --fundo-2: #21154a;
+  --painel: #2b1d5c;
+  --borda: #0a0618;
+  --texto: #f4ecd6;
+  --texto-fraco: #b3a7d9;
+  --casa: #f4ecd6;
+  --casa-texto: #140c2b;
+  --rosa: #ff3ea5;
+  --ciano: #3ee8ff;
+  --amarelo: #ffd23f;
+  --verde: #3ddc84;
+  --vermelho: #ff4d6d;
+  --px: 4px;
+  --fonte-pixel: "Press Start 2P", "Courier New", monospace;
+  --fonte-texto: "VT323", "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: 22px;
+  line-height: 1.15;
+  background-color: var(--fundo);
+  background-image:
+    linear-gradient(rgba(62, 232, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62, 232, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  image-rendering: pixelated;
+}
+
+/* linhas de TV antiga */
+.crt {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+}
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  text-align: center;
+  padding: 32px 16px 8px;
+}
+
+.subtitulo {
+  margin: 0 0 14px;
+  font-family: var(--fonte-pixel);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ciano);
+}
+
+.titulo {
+  margin: 0;
+  font-family: var(--fonte-pixel);
+  font-size: clamp(26px, 6vw, 52px);
+  color: var(--amarelo);
+  text-shadow:
+    4px 4px 0 var(--rosa),
+    8px 8px 0 var(--borda);
+  letter-spacing: 2px;
+}
+
+.instrucao {
+  margin: 18px 0 0;
+  color: var(--texto-fraco);
+}
+
+/* ---------- Layout ---------- */
+.jogo {
+  display: grid;
+  grid-template-columns: auto minmax(300px, 460px);
+  gap: 28px;
+  justify-content: center;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.area-tabuleiro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* moldura pixelada reutilizada */
+.pixel-box,
+.tabuleiro,
+.caixa-pistas,
+.placar,
+.pista-ativa {
+  background: var(--painel);
+  border: var(--px) solid var(--borda);
+  box-shadow:
+    inset var(--px) var(--px) 0 rgba(255, 255, 255, 0.08),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 rgba(0, 0, 0, 0.35),
+    6px 6px 0 var(--borda);
+}
+
+/* ---------- Placar ---------- */
+.placar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+}
+
+.placar-rotulo {
+  font-family: var(--fonte-pixel);
+  font-size: 10px;
+  color: var(--rosa);
+}
+
+.placar-valor {
+  font-family: var(--fonte-pixel);
+  font-size: 13px;
+  color: var(--amarelo);
+}
+
+/* ---------- Tabuleiro ---------- */
+.tabuleiro {
+  --casa-tam: min(38px, calc((100vw - 64px) / var(--colunas)));
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), var(--casa-tam));
+  grid-template-rows: repeat(var(--linhas), var(--casa-tam));
+  gap: 2px;
+  padding: 10px;
+  background: var(--fundo-2);
+}
+
+.casa {
+  position: relative;
+  background: var(--casa);
+  box-shadow:
+    inset -3px -3px 0 rgba(0, 0, 0, 0.18),
+    inset 3px 3px 0 rgba(255, 255, 255, 0.6);
+  transition: background-color 0.08s steps(2);
+}
+
+.casa.vazia {
+  background: transparent;
+  box-shadow: none;
+}
+
+.casa input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--casa-texto);
+  text-align: center;
+  text-transform: uppercase;
+  font-family: var(--fonte-pixel);
+  font-size: calc(var(--casa-tam) * 0.42);
+  padding-top: calc(var(--casa-tam) * 0.12);
+  caret-color: transparent;
+  cursor: pointer;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.casa .numero {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  font-family: var(--fonte-texto);
+  font-size: calc(var(--casa-tam) * 0.36);
+  line-height: 1;
+  color: #5b4b8a;
+  pointer-events: none;
+}
+
+.casa.na-palavra { background: var(--ciano); }
+.casa.foco { background: var(--amarelo); }
+.casa.foco::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--borda);
+  pointer-events: none;
+  animation: piscar 0.8s steps(1) infinite;
+}
+
+.casa.certa { background: var(--verde); }
+.casa.errada { background: var(--vermelho); }
+.casa.errada input { color: var(--texto); }
+.casa.certa.foco,
+.casa.errada.foco { background: var(--amarelo); }
+.casa.errada.foco input { color: var(--casa-texto); }
+
+@keyframes piscar {
+  50% { border-color: transparent; }
+}
+
+/* ---------- Pista ativa ---------- */
+.pista-ativa {
+  width: 100%;
+  max-width: calc(16 * 40px + 28px);
+  min-height: 64px;
+  padding: 12px 16px;
+  color: var(--texto);
+}
+
+.pista-ativa strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--fonte-pixel);
+  font-size: 10px;
+  font-weight: normal;
+  color: var(--ciano);
+}
+
+/* ---------- Botões ---------- */
+.botoes {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.botao {
+  font-family: var(--fonte-pixel);
+  font-size: 13px;
+  padding: 14px 20px;
+  color: var(--borda);
+  border: var(--px) solid var(--borda);
+  cursor: pointer;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.25),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.45),
+    6px 6px 0 var(--borda);
+  transition: transform 0.05s steps(1), box-shadow 0.05s steps(1);
+}
+
+.botao:hover { filter: brightness(1.1); }
+
+.botao:active {
+  transform: translate(6px, 6px);
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.25),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.45),
+    0 0 0 var(--borda);
+}
+
+.botao:focus-visible {
+  outline: 3px dashed var(--amarelo);
+  outline-offset: 6px;
+}
+
+.botao-conferir { background: var(--verde); }
+.botao-reiniciar { background: var(--rosa); }
+
+/* ---------- Mensagem ---------- */
+.mensagem {
+  min-height: 28px;
+  margin: 0;
+  text-align: center;
+  font-size: 24px;
+}
+
+.mensagem.aviso { color: var(--amarelo); }
+
+.mensagem.vitoria {
+  font-family: var(--fonte-pixel);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--verde);
+  animation: piscar-texto 0.6s steps(1) infinite;
+}
+
+@keyframes piscar-texto {
+  50% { color: var(--amarelo); }
+}
+
+/* ---------- Pistas ---------- */
+.area-pistas {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.caixa-pistas {
+  padding: 16px 14px 10px;
+}
+
+.caixa-pistas h2 {
+  margin: 0 0 12px;
+  font-family: var(--fonte-pixel);
+  font-size: 13px;
+  font-weight: normal;
+  color: var(--rosa);
+  text-shadow: 3px 3px 0 var(--borda);
+}
+
+.lista-pistas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pista {
+  display: grid;
+  grid-template-columns: 34px 1fr 26px;
+  gap: 8px;
+  align-items: start;
+  padding: 6px 6px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.pista:hover { background: rgba(62, 232, 255, 0.08); }
+
+.pista.ativa {
+  background: rgba(62, 232, 255, 0.16);
+  border-color: var(--ciano);
+}
+
+.pista-num {
+  font-family: var(--fonte-pixel);
+  font-size: 11px;
+  padding-top: 4px;
+  color: var(--amarelo);
+}
+
+.pista-texto em {
+  font-style: normal;
+  color: var(--texto-fraco);
+}
+
+.pista-status {
+  font-family: var(--fonte-pixel);
+  font-size: 12px;
+  padding-top: 4px;
+  text-align: center;
+}
+
+.pista.certa .pista-status::before { content: "✓"; color: var(--verde); font-family: var(--fonte-texto); font-size: 26px; }
+.pista.errada .pista-status::before { content: "✗"; color: var(--vermelho); font-family: var(--fonte-texto); font-size: 26px; }
+.pista.certa .pista-texto { color: var(--verde); }
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  text-align: center;
+  padding: 24px 16px 32px;
+  color: var(--texto-fraco);
+  font-size: 18px;
+}
+
+/* ---------- Telas menores ---------- */
+@media (max-width: 1060px) {
+  .jogo { grid-template-columns: 1fr; }
+  .area-pistas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  body { font-size: 20px; }
+  .area-pistas { grid-template-columns: 1fr; }
+  .tabuleiro { padding: 6px; gap: 1px; }
+  .botao { font-size: 11px; padding: 12px 14px; }
+  .casa .numero { font-size: calc(var(--casa-tam) * 0.4); }
+}
