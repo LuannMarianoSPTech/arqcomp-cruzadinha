@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cruzadinha de Arquitetura Computacional</title>
+  <meta name="description" content="Jogo de cruzadinha com os termos de Arquitetura Computacional.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="crt" aria-hidden="true"></div>
+
+  <header class="topo">
+    <p class="subtitulo">ARQUITETURA COMPUTACIONAL</p>
+    <h1 class="titulo">CRUZADINHA</h1>
+    <p class="instrucao">Clique numa casa ou numa pista e digite. Espaço troca a direção.</p>
+  </header>
+
+  <main class="jogo">
+    <section class="area-tabuleiro">
+      <div class="placar">
+        <span class="placar-rotulo">ACERTOS</span>
+        <span id="contador" class="placar-valor">0 de 16 palavras</span>
+      </div>
+
+      <div id="tabuleiro" class="tabuleiro" role="grid" aria-label="Tabuleiro da cruzadinha"></div>
+
+      <div id="pista-ativa" class="pista-ativa" aria-live="polite">Escolha uma casa para começar</div>
+
+      <div class="botoes">
+        <button id="btn-conferir" class="botao botao-conferir" type="button">CONFERIR</button>
+        <button id="btn-reiniciar" class="botao botao-reiniciar" type="button">REINICIAR</button>
+      </div>
+
+      <p id="mensagem" class="mensagem" role="status"></p>
+    </section>
+
+    <section class="area-pistas">
+      <div class="caixa-pistas">
+        <h2>HORIZONTAIS</h2>
+        <ol id="pistas-horizontais" class="lista-pistas"></ol>
+      </div>
+      <div class="caixa-pistas">
+        <h2>VERTICAIS</h2>
+        <ol id="pistas-verticais" class="lista-pistas"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Atividade Avaliativa III · Arquitetura Computacional</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
