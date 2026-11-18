@@ -305,7 +305,18 @@ body {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: 0 10px 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rosa) var(--fundo-2);
 }
+
+.area-pistas::-webkit-scrollbar { width: 12px; }
+.area-pistas::-webkit-scrollbar-track { background: var(--fundo-2); }
+.area-pistas::-webkit-scrollbar-thumb { background: var(--rosa); border: 3px solid var(--fundo-2); }
 
 .caixa-pistas {
   padding: 16px 14px 10px;
@@ -379,6 +390,10 @@ body {
 @media (max-width: 1060px) {
   .jogo { grid-template-columns: 1fr; }
   .area-pistas {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     max-width: 900px;
